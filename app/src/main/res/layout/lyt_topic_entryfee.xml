@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topic_entry_fee_card"
+    android:layout_width="@dimen/dim_60dp"
+    android:layout_height="@dimen/dim_60dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/dim_100dp"
+    app:cardElevation="@dimen/dim_3dp"
+    app:cardBackgroundColor="@color/ghost_white"
+    android:layout_margin="@dimen/dim_8dp">
+
+    <TextView
+        android:id="@+id/topic_entry_fee"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/nunito_semibold"
+        android:gravity="center"
+        android:text="₹3"
+        android:textColor="@color/space_purple"
+        android:textSize="@dimen/fs_16sp" />
+
+</com.google.android.material.card.MaterialCardView>

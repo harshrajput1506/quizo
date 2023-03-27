@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <integer name="dots_margin">9</integer>
+
+    <dimen name="dim_25dp">37.5dp</dimen>
+    <dimen name="dim_1dp">1.5dp</dimen>
+    <dimen name="dim_2dp">3dp</dimen>
+    <dimen name="dim_10dp">15dp</dimen>
+    <dimen name="dim_3dp">4.5dp</dimen>
+    <dimen name="dim_8dp">12dp</dimen>
+    <dimen name="dim_5dp">7.5dp</dimen>
+    <dimen name="dim_6dp">9dp</dimen>
+    <dimen name="dim_80dp">120dp</dimen>
+    <dimen name="dim_12dp">18dp</dimen>
+    <dimen name="dim_88dp">132dp</dimen>
+    <dimen name="dim_15dp">22.5dp</dimen>
+    <dimen name="dim_20dp">30dp</dimen>
+    <dimen name="dim_35dp">52.5dp</dimen>
+    <dimen name="dim_18dp">27dp</dimen>
+    <dimen name="dim_40dp">60dp</dimen>
+    <dimen name="dim_24dp">36dp</dimen>
+    <dimen name="dim_30dp">45dp</dimen>
+    <dimen name="dim_65dp">97.5dp</dimen>
+    <dimen name="dim_70dp">105dp</dimen>
+    <dimen name="dim_50dp">75dp</dimen>
+    <dimen name="dim_60dp">90dp</dimen>
+    <dimen name="dim_120dp">180dp</dimen>
+    <dimen name="dim_130dp">195dp</dimen>
+    <dimen name="dim_150dp">225dp</dimen>
+    <dimen name="dim_250dp">375dp</dimen>
+    <dimen name="dim_200dp">300dp</dimen>
+    <dimen name="dim_100dp">150dp</dimen>
+    <dimen name="dim_170dp">255dp</dimen>
+    <dimen name="dim_515dp">772.5dp</dimen>
+    <dimen name="dim_slider_img">400dp</dimen>
+
+    <dimen name="otpEditTxt">24sp</dimen>
+
+    <dimen name="fs_14sp">21sp</dimen>
+    <dimen name="fs_10sp">15sp</dimen>
+    <dimen name="fs_15sp">22.5sp</dimen>
+    <dimen name="fs_13sp">19.5sp</dimen>
+    <dimen name="fs_16sp">24sp</dimen>
+    <dimen name="fs_24sp">36sp</dimen>
+    <dimen name="fs_18sp">27sp</dimen>
+    <dimen name="fs_28sp">42sp</dimen>
+    <dimen name="fs_20sp">30sp</dimen>
+    <dimen name="fs_22sp">33sp</dimen>
+    <dimen name="fs_12sp">18sp</dimen>
+    <dimen name="fs_30sp">45sp</dimen>
+
+</resources>

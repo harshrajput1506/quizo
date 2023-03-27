@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="otpEditTxt">16sp</dimen>
+    <dimen name="quizo_logo_height">0.07</dimen>
+    <integer name="dots_margin">6</integer>
+
+    <dimen name="dim_25dp">25dp</dimen>
+    <dimen name="dim_3dp">3dp</dimen>
+    <dimen name="dim_2dp">2dp</dimen>
+    <dimen name="dim_1dp">1dp</dimen>
+    <dimen name="dim_5dp">5dp</dimen>
+    <dimen name="dim_6dp">6dp</dimen>
+    <dimen name="dim_80dp">80dp</dimen>
+    <dimen name="dim_8dp">8dp</dimen>
+    <dimen name="dim_12dp">12dp</dimen>
+    <dimen name="dim_24dp">24dp</dimen>
+    <dimen name="dim_10dp">10dp</dimen>
+    <dimen name="dim_15dp">15dp</dimen>
+    <dimen name="dim_18dp">18dp</dimen>
+    <dimen name="dim_20dp">20dp</dimen>
+    <dimen name="dim_88dp">88dp</dimen>
+    <dimen name="dim_30dp">30dp</dimen>
+    <dimen name="dim_35dp">35dp</dimen>
+    <dimen name="dim_40dp">40dp</dimen>
+    <dimen name="dim_50dp">50dp</dimen>
+    <dimen name="dim_60dp">60dp</dimen>
+    <dimen name="dim_70dp">70dp</dimen>
+    <dimen name="dim_150dp">150dp</dimen>
+    <dimen name="dim_65dp">65dp</dimen>
+    <dimen name="dim_120dp">120dp</dimen>
+    <dimen name="dim_130dp">130dp</dimen>
+    <dimen name="dim_250dp">250dp</dimen>
+    <dimen name="dim_515dp">515dp</dimen>
+    <dimen name="dim_200dp">200dp</dimen>
+    <dimen name="dim_100dp">100dp</dimen>
+    <dimen name="dim_170dp">170dp</dimen>
+    <dimen name="dim_slider_img">350dp</dimen>
+
+
+    <dimen name="fs_14sp">14sp</dimen>
+    <dimen name="fs_10sp">10sp</dimen>
+    <dimen name="fs_13sp">13sp</dimen>
+    <dimen name="fs_16sp">16sp</dimen>
+    <dimen name="fs_15sp">15sp</dimen>
+    <dimen name="fs_18sp">18sp</dimen>
+    <dimen name="fs_20sp">20sp</dimen>
+    <dimen name="fs_22sp">22sp</dimen>
+    <dimen name="fs_24sp">24sp</dimen>
+    <dimen name="fs_28sp">28sp</dimen>
+    <dimen name="fs_30sp">30sp</dimen>
+    <dimen name="fs_12sp">12sp</dimen>
+</resources>

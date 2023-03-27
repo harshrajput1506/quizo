@@ -1,0 +1,125 @@
+{
+  "project_info": {
+    "project_number": "17675326406",
+    "firebase_url": "https://quiz-a192b.firebaseio.com",
+    "project_id": "quiz-a192b",
+    "storage_bucket": "quiz-a192b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17675326406:android:8f645bd43813814f8b98c7",
+        "android_client_info": {
+          "package_name": "in.hypernation.hyperquizo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17675326406-dkoqeq2sdmnch4jo5ufl8lcmh5kmfvlv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.hypernation.hyperquizo",
+            "certificate_hash": "ae5715e062e648d3af3e73110bd1ef86c12fb0ec"
+          }
+        },
+        {
+          "client_id": "17675326406-u2h3sg3hockga82gv2gn36e66j3ie0tk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.hypernation.hyperquizo",
+            "certificate_hash": "110389c08d194e8ffcc5bc2186ed3e89e2d1c84a"
+          }
+        },
+        {
+          "client_id": "17675326406-m6b82t7p81mga56f0cp8d3sg8h0edplj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALwGbzkWbDrh1z_3zO7JIJQUcQtKom3Y8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101209130458696721699",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17675326406:android:41d6cfce4e3ab7d78b98c7",
+        "android_client_info": {
+          "package_name": "in.hypernation.quizo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17675326406-2kjfjdkkfnfurrs2efuvf5ochfdre1tu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.hypernation.quizo",
+            "certificate_hash": "5f7aede504f6e5e8625071d69c9686d55042cd4c"
+          }
+        },
+        {
+          "client_id": "17675326406-4mdk4glcmfoadpqaho85qq9cedgubdok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.hypernation.quizo",
+            "certificate_hash": "6c738869e20215d3954e79e2e0df2811ade12e3b"
+          }
+        },
+        {
+          "client_id": "17675326406-9itt3u7mkitaoihspdmha49hcqpl0uo1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.hypernation.quizo",
+            "certificate_hash": "44c0a8338afeb03aecddb785d066f5c9d206e63c"
+          }
+        },
+        {
+          "client_id": "17675326406-lnvjtgr8fqb0u80ocju8ohv76i2ie91c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.hypernation.quizo",
+            "certificate_hash": "ace2ff28b3b47c20cc31c2bd4a707314d6d88043"
+          }
+        },
+        {
+          "client_id": "17675326406-rgsvr3l3vrimalupd0vmceuc4o5nsd7t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.hypernation.quizo",
+            "certificate_hash": "e2fe732bbd54a3e6a5ec35c10d8425c5dfa23a78"
+          }
+        },
+        {
+          "client_id": "17675326406-m6b82t7p81mga56f0cp8d3sg8h0edplj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALwGbzkWbDrh1z_3zO7JIJQUcQtKom3Y8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101209130458696721699",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

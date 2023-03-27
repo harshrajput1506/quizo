@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dialog_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/dim_20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_10dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/dialog_icon"
+                android:layout_width="@dimen/dim_50dp"
+                android:layout_height="@dimen/dim_50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/sad"/>
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/fs_24sp"
+                android:text="Sorry!"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/dim_5dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nunito_bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/dialog_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/fs_14sp"
+            android:text="No match found. Please try after some time."
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="0dp"
+            android:textColor="@color/grey"
+            android:layout_marginTop="@dimen/dim_15dp"
+            android:layout_marginStart="@dimen/dim_15dp"
+            android:layout_marginEnd="@dimen/dim_15dp"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/nunito_bold"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_30dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/dialog_action_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/dim_80dp"
+                app:cardBackgroundColor="@color/space_purple"
+                android:layout_marginStart="@dimen/dim_5dp"
+                android:layout_marginEnd="@dimen/dim_5dp"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/dialog_cancel_btn">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/fs_14sp"
+                    android:text="Try Again"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0dp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:padding="@dimen/dim_12dp"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/dialog_cancel_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/dim_80dp"
+                app:cardBackgroundColor="@color/black_60"
+                android:layout_marginStart="@dimen/dim_5dp"
+                android:layout_marginEnd="@dimen/dim_5dp"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@id/dialog_action_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/fs_14sp"
+                    android:text="Quit"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0dp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:padding="@dimen/dim_12dp"/>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

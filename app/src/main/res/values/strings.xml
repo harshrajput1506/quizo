@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Quizo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_auth_title">Welcome\nto Quizo</string>
+    <string name="auth_terms_and_conditions">By proceeding, you agree with our\n<u>Terms of Service</u> and <u>Privacy Policy</u></string>
+    <string name="wave_hand_emoji">👋</string>
+    <string name="entry_disclaimer">By joining this game, you accept Quizo T&amp;C\'s and confirm that you are not a resident of Assam, Andhra Pradesh, Telangana, Sikkim, Nagaland, Odisha.\nBonus for every pool entry may change.</string>
+    <string name="country_code">+91</string>
+    <string name="rupee_symbol">₹</string>
+    <string name="onboard_title_1">Play &amp; Win Daily</string>
+    <string name="topic_rules">2. For each question user will get 10 seconds to answer. \n3. The faster the user the more point he gets. \n4. For every second saved user gets 1 point if the user has given the right answer. </string>
+    <string name="onboard_title_2">Challenge Your Friends</string>
+    <string name="onboard_title_3">Unleash Your Skills</string>
+    <string name="onboard_description_1">Quizo provide 1V1 Battle and Daily contests to play with different opponents. You can easily win cash &amp; prizes on the daily basis.</string>
+    <string name="onboard_description_2">We give you a opportunity to play with your friends and challenge them to win. Our trending topics make sure that you will get top notch experience.</string>
+    <string name="onboard_description_3">Quizo\'s mission is to deliver high-quality questions in every topic so you can improve your learning skills.</string>
+</resources>

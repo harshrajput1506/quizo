@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/all_topics_card"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/dim_20dp"
+    app:cardElevation="@dimen/dim_3dp"
+    app:cardBackgroundColor="@color/white"
+    android:layout_margin="@dimen/dim_12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dim_25dp"
+        android:orientation="vertical">
+        
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/all_topics_icon"
+            android:layout_width="@dimen/dim_70dp"
+            android:layout_height="@dimen/dim_70dp"
+            android:layout_gravity="center"
+            android:elevation="@dimen/dim_1dp"
+            android:src="@drawable/random"/>
+        <TextView
+            android:id="@+id/all_topics_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="General"
+            android:textSize="@dimen/fs_14sp"
+            android:fontFamily="@font/nunito_semibold"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dim_5dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

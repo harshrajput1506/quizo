@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topic_entry_fee_card"
+    android:layout_width="@dimen/dim_60dp"
+    android:layout_height="@dimen/dim_60dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/dim_100dp"
+    app:cardElevation="@dimen/dim_3dp"
+    app:cardBackgroundColor="@color/shimmer_placeholder"
+    android:layout_margin="@dimen/dim_8dp">
+
+</com.google.android.material.card.MaterialCardView>

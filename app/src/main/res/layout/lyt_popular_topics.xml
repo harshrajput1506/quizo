@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/dim_10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/topic_icon"
+        android:layout_width="@dimen/dim_65dp"
+        android:layout_height="@dimen/dim_65dp"
+        android:elevation="@dimen/dim_3dp"
+        android:padding="@dimen/dim_3dp"
+        android:src="@drawable/profileavatar" />
+
+    <TextView
+        android:id="@+id/topic_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bollywood"
+        android:maxWidth="@dimen/dim_65dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/fs_15sp"
+        android:textColor="@color/grey"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dim_5dp"
+        android:fontFamily="@font/nunito_semibold"/>
+
+</LinearLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/level_progress_bg">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim_10dp"/>
+            <solid android:color="#16000000"/>
+        </shape>
+    </item>
+
+    <item android:id="@+id/level_progress">
+        <scale android:scaleWidth="100%">
+            <shape android:shape="rectangle">
+                <corners android:radius="@dimen/dim_10dp"/>
+                <solid android:color="@color/white"/>
+            </shape>
+        </scale>
+    </item>
+
+</layer-list>

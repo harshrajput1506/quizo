@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dim_20dp"
+        android:layout_margin="@dimen/dim_10dp"
+        app:cardBackgroundColor="@color/shimmer_secondary">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_pool_icon_card"
+                android:layout_width="@dimen/dim_80dp"
+                android:layout_height="@dimen/dim_80dp"
+                android:layout_margin="@dimen/dim_15dp"
+                android:elevation="0dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_topic_title"
+                android:layout_width="@dimen/dim_120dp"
+                android:layout_height="@dimen/dim_20dp"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                android:elevation="0dp"
+                android:layout_marginStart="@dimen/dim_10dp"
+                android:layout_marginTop="@dimen/dim_5dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/live_pool_icon_card"
+                app:layout_constraintTop_toTopOf="@id/live_pool_icon_card"
+                app:layout_constraintVertical_bias="0" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_prize_pool"
+                android:layout_width="@dimen/dim_80dp"
+                android:layout_height="@dimen/dim_15dp"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                android:layout_marginTop="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintStart_toStartOf="@id/live_topic_title"
+                app:layout_constraintTop_toBottomOf="@+id/live_topic_title" />
+
+            <LinearLayout
+                android:id="@+id/live_prize_container"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:layout_marginEnd="@dimen/dim_20dp"
+                android:layout_marginTop="@dimen/dim_5dp"
+                android:layout_marginBottom="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintVertical_bias="0.5" >
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/dim_100dp"
+                    android:layout_height="@dimen/dim_35dp"
+                    android:layout_marginTop="@dimen/dim_10dp"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="@dimen/dim_25dp"
+                    app:cardBackgroundColor="@color/shimmer_placeholder"/>
+            </LinearLayout>
+
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dim_20dp"
+        android:layout_margin="@dimen/dim_10dp"
+        app:cardBackgroundColor="@color/shimmer_secondary">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_pool_icon_card2"
+                android:layout_width="@dimen/dim_80dp"
+                android:layout_height="@dimen/dim_80dp"
+                android:layout_margin="@dimen/dim_15dp"
+                android:elevation="0dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_topic_title2"
+                android:layout_width="@dimen/dim_120dp"
+                android:layout_height="@dimen/dim_20dp"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                android:elevation="0dp"
+                android:layout_marginStart="@dimen/dim_10dp"
+                android:layout_marginTop="@dimen/dim_5dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/live_pool_icon_card2"
+                app:layout_constraintTop_toTopOf="@id/live_pool_icon_card2"
+                app:layout_constraintVertical_bias="0" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_prize_pool2"
+                android:layout_width="@dimen/dim_80dp"
+                android:layout_height="@dimen/dim_15dp"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                android:layout_marginTop="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintStart_toStartOf="@id/live_topic_title2"
+                app:layout_constraintTop_toBottomOf="@+id/live_topic_title2" />
+
+            <LinearLayout
+                android:id="@+id/live_prize_container2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:layout_marginEnd="@dimen/dim_20dp"
+                android:layout_marginTop="@dimen/dim_5dp"
+                android:layout_marginBottom="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintVertical_bias="0.5" >
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/dim_100dp"
+                    android:layout_height="@dimen/dim_35dp"
+                    android:layout_marginTop="@dimen/dim_10dp"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="@dimen/dim_25dp"
+                    app:cardBackgroundColor="@color/shimmer_placeholder"/>
+            </LinearLayout>
+
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dim_20dp"
+        android:layout_margin="@dimen/dim_10dp"
+        app:cardBackgroundColor="@color/shimmer_secondary">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_pool_icon_card3"
+                android:layout_width="@dimen/dim_80dp"
+                android:layout_height="@dimen/dim_80dp"
+                android:layout_margin="@dimen/dim_15dp"
+                android:elevation="0dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_topic_title3"
+                android:layout_width="@dimen/dim_120dp"
+                android:layout_height="@dimen/dim_20dp"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                android:elevation="0dp"
+                android:layout_marginStart="@dimen/dim_10dp"
+                android:layout_marginTop="@dimen/dim_5dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/live_pool_icon_card3"
+                app:layout_constraintTop_toTopOf="@id/live_pool_icon_card3"
+                app:layout_constraintVertical_bias="0" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_prize_pool3"
+                android:layout_width="@dimen/dim_80dp"
+                android:layout_height="@dimen/dim_15dp"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                android:layout_marginTop="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintStart_toStartOf="@id/live_topic_title3"
+                app:layout_constraintTop_toBottomOf="@+id/live_topic_title3" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:layout_marginEnd="@dimen/dim_20dp"
+                android:layout_marginTop="@dimen/dim_5dp"
+                android:layout_marginBottom="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintVertical_bias="0.5" >
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/dim_100dp"
+                    android:layout_height="@dimen/dim_35dp"
+                    android:layout_marginTop="@dimen/dim_10dp"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="@dimen/dim_25dp"
+                    app:cardBackgroundColor="@color/shimmer_placeholder"/>
+            </LinearLayout>
+
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dim_20dp"
+        android:layout_margin="@dimen/dim_10dp"
+        app:cardBackgroundColor="@color/shimmer_secondary">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_pool_icon_card4"
+                android:layout_width="@dimen/dim_80dp"
+                android:layout_height="@dimen/dim_80dp"
+                android:layout_margin="@dimen/dim_15dp"
+                android:elevation="0dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_topic_title4"
+                android:layout_width="@dimen/dim_120dp"
+                android:layout_height="@dimen/dim_20dp"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                android:elevation="0dp"
+                android:layout_marginStart="@dimen/dim_10dp"
+                android:layout_marginTop="@dimen/dim_5dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/live_pool_icon_card4"
+                app:layout_constraintTop_toTopOf="@id/live_pool_icon_card4"
+                app:layout_constraintVertical_bias="0" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/live_prize_pool4"
+                android:layout_width="@dimen/dim_80dp"
+                android:layout_height="@dimen/dim_15dp"
+                app:cardCornerRadius="@dimen/dim_20dp"
+                app:cardBackgroundColor="@color/shimmer_placeholder"
+                android:layout_marginTop="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintStart_toStartOf="@id/live_topic_title4"
+                app:layout_constraintTop_toBottomOf="@+id/live_topic_title4" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:layout_marginEnd="@dimen/dim_20dp"
+                android:layout_marginTop="@dimen/dim_5dp"
+                android:layout_marginBottom="@dimen/dim_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintVertical_bias="0.5" >
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/dim_100dp"
+                    android:layout_height="@dimen/dim_35dp"
+                    android:layout_marginTop="@dimen/dim_10dp"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="@dimen/dim_25dp"
+                    app:cardBackgroundColor="@color/shimmer_placeholder"/>
+            </LinearLayout>
+
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

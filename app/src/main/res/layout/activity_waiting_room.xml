@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ghost_blue"
+    tools:context=".Activities.WaitingRoomActivity">
+
+    <TextView
+        android:id="@+id/waiting_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Waiting for Opponent"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fs_20sp"
+        android:fontFamily="@font/nunito_bold"
+        android:layout_marginTop="@dimen/dim_20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/player1_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/timer_progress"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toBottomOf="@id/waiting_title"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dim_120dp"
+        android:layout_marginStart="@dimen/dim_30dp"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/player1picture"
+            android:layout_width="@dimen/dim_70dp"
+            android:layout_height="@dimen/dim_70dp"
+            android:src="@drawable/avatar1"
+            android:elevation="@dimen/dim_8dp" />
+
+        <TextView
+            android:id="@+id/player1name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/fs_14sp"
+            android:textColor="@color/grey"
+            android:text="username353454"
+            android:fontFamily="@font/nunito_semibold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="@dimen/dim_3dp"
+            android:maxWidth="@dimen/dim_88dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/versus_img"
+        android:visibility="invisible"
+        android:layout_width="@dimen/dim_50dp"
+        android:layout_height="@dimen/dim_50dp"
+        android:src="@drawable/versus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toBottomOf="@id/player1_container"/>
+
+    <ProgressBar
+        android:visibility="visible"
+        android:id="@+id/timer_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="@dimen/dim_50dp"
+        android:layout_height="@dimen/dim_50dp"
+        android:progressDrawable="@drawable/progress_purple_ring"
+        android:background="@drawable/progress_grey_ring"
+        android:max="100"
+        android:progress="100"
+        android:rotation="-90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toBottomOf="@id/player1_container"/>
+
+    <TextView
+        android:id="@+id/timer_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="90"
+        android:textColor="@color/black"
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="@dimen/fs_14sp"
+        android:lineSpacingExtra="0dp"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toStartOf="@id/timer_progress"
+        app:layout_constraintEnd_toEndOf="@id/timer_progress"
+        app:layout_constraintBottom_toBottomOf="@id/timer_progress"
+        app:layout_constraintTop_toTopOf="@id/timer_progress"/>
+
+    <LinearLayout
+        android:id="@+id/player2_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/timer_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toBottomOf="@id/timer_progress"
+        android:gravity="center"
+        android:layout_marginEnd="@dimen/dim_30dp"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/player2picture"
+            android:layout_width="@dimen/dim_70dp"
+            android:layout_height="@dimen/dim_70dp"
+            android:src="@drawable/avatar2"
+            android:elevation="@dimen/dim_8dp" />
+
+        <TextView
+            android:id="@+id/player2name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/fs_14sp"
+            android:textColor="@color/grey"
+            android:text="username14"
+            android:fontFamily="@font/nunito_semibold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="@dimen/dim_3dp"
+            android:maxWidth="@dimen/dim_88dp"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/searching_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/timer_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toBottomOf="@id/timer_progress"
+        android:gravity="center"
+        android:layout_marginEnd="@dimen/dim_30dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/searching_player"
+            android:layout_width="@dimen/dim_100dp"
+            android:layout_height="@dimen/dim_100dp"
+            app:lottie_rawRes="@raw/searching_person"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/text68"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't quit or close app."
+        android:textSize="@dimen/fs_12sp"
+        android:fontFamily="@font/nunito_semibold"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toTopOf="@id/text69"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"/>
+
+    <TextView
+        android:id="@+id/text69"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You should have good internet connection."
+        android:textSize="@dimen/fs_12sp"
+        android:fontFamily="@font/nunito_semibold"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/player2_container"
+        app:layout_constraintVertical_bias="0.9"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
