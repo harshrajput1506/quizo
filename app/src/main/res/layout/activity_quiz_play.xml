@@ -7,17 +7,6 @@
     android:background="@color/space_purple"
     tools:context=".Activities.QuizPlayActivity">
 
-    <View
-        android:id="@+id/main_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_quiz_play"
-        android:layout_marginTop="@dimen/dim_100dp"
-        android:elevation="@dimen/dim_5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/player1image"
@@ -27,8 +16,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/main_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="@dimen/dim_20dp"
         android:layout_marginStart="@dimen/dim_50dp"/>
 
     <TextView
@@ -36,15 +27,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_semibold"
-        android:text="sakshi"
+        android:text="Player1"
         android:ellipsize="end"
         android:maxWidth="@dimen/dim_100dp"
         android:textColor="@color/ghost_white"
         android:textSize="@dimen/fs_14sp"
+        android:layout_marginBottom="@dimen/dim_20dp"
         app:layout_constraintTop_toBottomOf="@id/player1image"
         app:layout_constraintStart_toStartOf="@id/player1image"
         app:layout_constraintEnd_toEndOf="@id/player1image"
-        app:layout_constraintBottom_toTopOf="@id/main_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0"
         />
 
@@ -72,9 +64,11 @@
         android:layout_height="@dimen/dim_40dp"
         android:layout_marginEnd="@dimen/dim_50dp"
         android:src="@drawable/avatar2"
-        app:layout_constraintBottom_toTopOf="@id/main_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="@dimen/dim_20dp"
         app:layout_constraintStart_toEndOf="@+id/player1image"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,15 +77,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_semibold"
-        android:text="demonharsh"
+        android:text="Player2"
         android:ellipsize="end"
         android:maxWidth="@dimen/dim_100dp"
         android:textColor="@color/ghost_white"
         android:textSize="@dimen/fs_14sp"
+        android:layout_marginBottom="@dimen/dim_20dp"
         app:layout_constraintTop_toBottomOf="@id/player2picture"
         app:layout_constraintStart_toStartOf="@id/player2picture"
         app:layout_constraintEnd_toEndOf="@id/player2picture"
-        app:layout_constraintBottom_toTopOf="@id/main_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0"
         />
 
@@ -113,16 +108,275 @@
         app:layout_constraintHorizontal_bias="1"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Q. 1/5"
-        android:textColor="@color/grey"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_quiz_play"
+        android:layout_marginTop="@dimen/dim_20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/player1name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical" >
 
-        android:fontFamily="@font/nunito_semibold"
-        app:layout_constraintTop_toTopOf="@id/main_layout"
-        app:layout_constraintStart_toStartOf="@id/main_layout"
-        app:layout_constraintEnd_toEndOf="@id/main_layout"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/questions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="Q. 1/5"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/fs_18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/main_layout"
+                    app:layout_constraintEnd_toEndOf="@id/main_layout"
+                    app:layout_constraintStart_toStartOf="@id/main_layout"
+                    app:layout_constraintTop_toTopOf="@id/main_layout"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintVertical_bias="0"
+                    android:layout_marginTop="@dimen/dim_30dp"
+                    android:layout_marginStart="@dimen/dim_30dp"/>
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/question_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/questions"
+                    app:trackCornerRadius="@dimen/dim_20dp"
+                    app:trackThickness="@dimen/dim_12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:progress="20"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0"
+                    android:layout_marginStart="@dimen/dim_20dp"
+                    android:layout_marginEnd="@dimen/dim_20dp"
+                    android:layout_marginTop="@dimen/dim_10dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/timer_img"
+                    android:layout_width="@dimen/dim_20dp"
+                    android:layout_height="@dimen/dim_20dp"
+                    android:src="@drawable/clock"
+                    app:layout_constraintStart_toEndOf="@id/questions"
+                    app:layout_constraintTop_toTopOf="@id/questions"
+                    app:layout_constraintBottom_toBottomOf="@id/questions"
+                    app:layout_constraintEnd_toStartOf="@id/timer"
+                    app:layout_constraintHorizontal_bias="1"
+                    android:layout_marginEnd="@dimen/dim_8dp"/>
+
+                <TextView
+                    android:id="@+id/timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="12"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fs_18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/questions"
+                    app:layout_constraintEnd_toEndOf="@id/main_layout"
+                    app:layout_constraintStart_toEndOf="@id/questions"
+                    app:layout_constraintTop_toTopOf="@id/questions"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintVertical_bias="0"
+                    android:layout_marginEnd="@dimen/dim_30dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/question_progress"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0">
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/question_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/dim_20dp"
+                        android:layout_marginStart="@dimen/dim_30dp"
+                        android:layout_marginEnd="@dimen/dim_30dp">
+
+                        <Space
+                            android:visibility="gone"
+                            android:id="@+id/space1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dim_40dp"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:visibility="visible"
+                            android:id="@+id/question_img_container"
+                            android:layout_width="@dimen/dim_250dp"
+                            android:layout_height="@dimen/dim_180dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/dim_20dp"
+                            app:cardElevation="@dimen/dim_5dp"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:id="@+id/question_img"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/random"
+                                android:scaleType="centerCrop"/>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:id="@+id/question"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Where is Taj Mahal situated?"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fs_24sp"
+                            android:fontFamily="@font/nunito_bold"
+                            android:layout_marginTop="@dimen/dim_15dp"
+                            android:layout_marginBottom="@dimen/dim_10dp"/>
+
+                        <Space
+                            android:visibility="gone"
+                            android:id="@+id/space2"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dim_40dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/options_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/question_layout"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintVertical_bias="0"
+                        android:padding="@dimen/dim_32dp"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/dim_20dp"
+                            android:elevation="@dimen/dim_5dp"
+                            android:layout_margin="@dimen/dim_5dp">
+
+                            <TextView
+                                android:id="@+id/option1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="A. Delhi"
+                                android:textColor="@color/grey"
+                                android:layout_marginTop="@dimen/dim_18dp"
+                                android:layout_marginBottom="@dimen/dim_18dp"
+                                android:layout_marginStart="@dimen/dim_25dp"
+                                android:layout_marginEnd="@dimen/dim_18dp"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:textSize="@dimen/fs_16sp"/>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/dim_20dp"
+                            android:elevation="@dimen/dim_5dp"
+                            android:layout_marginTop="@dimen/dim_15dp"
+                            android:layout_marginStart="@dimen/dim_5dp"
+                            android:layout_marginEnd="@dimen/dim_5dp"
+                            android:layout_marginBottom="@dimen/dim_5dp">
+
+                            <TextView
+                                android:id="@+id/option2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="B. Mumbai"
+                                android:textColor="@color/grey"
+                                android:layout_marginTop="@dimen/dim_18dp"
+                                android:layout_marginBottom="@dimen/dim_18dp"
+                                android:layout_marginStart="@dimen/dim_25dp"
+                                android:layout_marginEnd="@dimen/dim_18dp"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:textSize="@dimen/fs_16sp"/>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/dim_20dp"
+                            android:elevation="@dimen/dim_5dp"
+                            android:layout_marginTop="@dimen/dim_15dp"
+                            android:layout_marginStart="@dimen/dim_5dp"
+                            android:layout_marginEnd="@dimen/dim_5dp"
+                            android:layout_marginBottom="@dimen/dim_5dp">
+
+                            <TextView
+                                android:id="@+id/option3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="C. Agra"
+                                android:textColor="@color/grey"
+                                android:layout_marginTop="@dimen/dim_18dp"
+                                android:layout_marginBottom="@dimen/dim_18dp"
+                                android:layout_marginStart="@dimen/dim_25dp"
+                                android:layout_marginEnd="@dimen/dim_18dp"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:textSize="@dimen/fs_16sp"/>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/dim_20dp"
+                            android:elevation="@dimen/dim_5dp"
+                            android:layout_marginTop="@dimen/dim_15dp"
+                            android:layout_marginStart="@dimen/dim_5dp"
+                            android:layout_marginEnd="@dimen/dim_5dp"
+                            android:layout_marginBottom="@dimen/dim_5dp">
+
+                            <TextView
+                                android:id="@+id/option4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="D. Chennai"
+                                android:textColor="@color/grey"
+                                android:layout_marginTop="@dimen/dim_18dp"
+                                android:layout_marginBottom="@dimen/dim_18dp"
+                                android:layout_marginStart="@dimen/dim_25dp"
+                                android:layout_marginEnd="@dimen/dim_18dp"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:textSize="@dimen/fs_16sp"/>
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

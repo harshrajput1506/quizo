@@ -502,6 +502,7 @@ public class TopicActivity extends AppCompatActivity {
         addData.put("category", pool.getCategory());
         addData.put("title", pool.getTitle());
         addData.put("total_questions", pool.getQuestions());
+        addData.put("player1_live_question", 1);
         addData.put("createdAt", FieldValue.serverTimestamp());
 
         db.collection("gameRooms").add(addData).addOnSuccessListener(documentReference -> {

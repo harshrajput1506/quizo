@@ -87,12 +87,13 @@ public class WaitingRoomActivity extends AppCompatActivity {
         SPManager.init(getApplicationContext());
 
         RoomID = getIntent().getStringExtra("roomID");
+        Log.d("WaitingRoomActivity", "onCreate: RoomID Waiting Room"+RoomID);
 
         setProgress();
         setCountDownTimer();
 
         //Set Player1
-        String player1_name = SPManager.getStringValue("username", "");
+        String player1_name = SPManager.getStringValue("name", "");
         player1name.setText(player1_name);
         String player1_picture = SPManager.getStringValue("profilePicture", "");
         Glide.with(this).load(player1_picture).placeholder(R.drawable.profileavatar).into(player1picture);
@@ -131,7 +132,8 @@ public class WaitingRoomActivity extends AppCompatActivity {
                         } else {
                             //set data on quizPool model
                             Pool quizPool = new Pool();
-                            quizPool.setQuestions((int)data.get("total_questions"));
+                            long questions = (long) data.get("total_questions");
+                            quizPool.setQuestions((int)questions);
                             quizPool.setCategory((String) data.get("category"));
                             quizPool.setTitle((String) data.get("title"));
 

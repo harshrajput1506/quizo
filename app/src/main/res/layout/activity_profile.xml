@@ -77,7 +77,7 @@
         android:id="@+id/profile_avatar"
         android:layout_width="@dimen/dim_100dp"
         android:layout_height="@dimen/dim_100dp"
-        android:src="@drawable/profileavatar"
+        android:src="@drawable/avatar9"
         android:elevation="@dimen/dim_10dp"
         app:layout_constraintTop_toTopOf="@id/guideline2"
         app:layout_constraintBottom_toTopOf="@id/guideline3"

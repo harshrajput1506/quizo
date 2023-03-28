@@ -23,6 +23,8 @@
     <dimen name="dim_24dp">36dp</dimen>
     <dimen name="dim_30dp">45dp</dimen>
     <dimen name="dim_65dp">97.5dp</dimen>
+    <dimen name="dim_180dp">270dp</dimen>
+    <dimen name="dim_32dp">48dp</dimen>
     <dimen name="dim_70dp">105dp</dimen>
     <dimen name="dim_50dp">75dp</dimen>
     <dimen name="dim_60dp">90dp</dimen>
