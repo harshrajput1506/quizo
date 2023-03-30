@@ -34,7 +34,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import in.hypernation.quizo.Managers.SPManager;
@@ -51,9 +53,11 @@ public class QuizPlayActivity extends AppCompatActivity {
     private long totalQuestions = 5;
     private LinearLayout questionLayout, optionLayout;
     private JSONArray questionArray;
-    private CardView questionImageLayout;
+    private CardView questionImageLayout, option1layout, option2layout, option3layout, option4layout;
     private Space space1, space2;
     private ImageView questionImg;
+    private String ans1, ans2, ans3, ans4, correctAns;
+    private double livePoint, totalScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,10 @@ public class QuizPlayActivity extends AppCompatActivity {
         questionTxt = findViewById(R.id.question);
         player1score = findViewById(R.id.player1score);
         player2score = findViewById(R.id.player2score);
+        option1layout = findViewById(R.id.option1layout);
+        option2layout = findViewById(R.id.option2layout);
+        option3layout = findViewById(R.id.option3layout);
+        option4layout = findViewById(R.id.option4layout);
 
         db = FirebaseFirestore.getInstance();
         SPManager.init(getApplicationContext());
@@ -111,6 +119,70 @@ public class QuizPlayActivity extends AppCompatActivity {
 
         createWaitingDialog();
 
+        //Listeners
+
+        option1layout.setOnClickListener(v-> {
+            disableClicks();
+            if(Objects.equals(correctAns, ans1)){
+                option1layout.setCardBackgroundColor(getResources().getColor(R.color.green_70));
+                option1.setTextColor(getResources().getColor(R.color.white));
+                updatePoints(livePoint);
+            } else {
+                option1layout.setCardBackgroundColor(getResources().getColor(R.color.red_70));
+                option1.setTextColor(getResources().getColor(R.color.white));
+                updatePoints(0);
+            }
+        });
+
+        option2layout.setOnClickListener(v->{
+            disableClicks();
+            disableClicks();
+            if(Objects.equals(correctAns, ans2)){
+                option2layout.setCardBackgroundColor(getResources().getColor(R.color.green_70));
+                option2.setTextColor(getResources().getColor(R.color.white));
+                updatePoints(livePoint);
+            } else {
+                option2layout.setCardBackgroundColor(getResources().getColor(R.color.red_70));
+                option2.setTextColor(getResources().getColor(R.color.white));
+                updatePoints(0);
+            }
+
+        });
+
+        option3layout.setOnClickListener(v-> {
+            disableClicks();
+            disableClicks();
+            if(Objects.equals(correctAns, ans3)){
+                option3layout.setCardBackgroundColor(getResources().getColor(R.color.green_70));
+                option3.setTextColor(getResources().getColor(R.color.white));
+                updatePoints(livePoint);
+            } else {
+                option3layout.setCardBackgroundColor(getResources().getColor(R.color.red_70));
+                option3.setTextColor(getResources().getColor(R.color.white));
+                updatePoints(0);
+            }
+
+        });
+
+        option4layout.setOnClickListener(v->{
+            disableClicks();
+            disableClicks();
+            if(Objects.equals(correctAns, ans4)){
+                option4layout.setCardBackgroundColor(getResources().getColor(R.color.green_70));
+                option4.setTextColor(getResources().getColor(R.color.white));
+                updatePoints(livePoint);
+            } else {
+                option4layout.setCardBackgroundColor(getResources().getColor(R.color.red_70));
+                option4.setTextColor(getResources().getColor(R.color.white));
+                updatePoints(0);
+            }
+
+        });
+
+    }
+
+    private void updatePoints(double point) {
+        totalScores = totalScores+point;
     }
 
     private void setProfiles(){
@@ -126,6 +198,7 @@ public class QuizPlayActivity extends AppCompatActivity {
         player2name.setText(opponentName);
         player1score.setText("0");
         player2score.setText("0");
+        totalScores = 0;
         Log.d("QuizPlay", "onCreate Quiz Play: "+opponentName+" "+opponentPicture);
     }
 
@@ -172,11 +245,30 @@ public class QuizPlayActivity extends AppCompatActivity {
         String option2Lbl = question.getString("option2");
         String option3Lbl = question.getString("option3");
         String option4Lbl = question.getString("option4");
+        ans1 = option1Lbl;
+        ans2 = option2Lbl;
+        ans3 = option3Lbl;
+        ans4 = option4Lbl;
 
         option1.setText("A. "+option1Lbl);
         option2.setText("B. "+option2Lbl);
         option3.setText("C. "+option3Lbl);
         option4.setText("D. "+option4Lbl);
+        correctAns = question.getString("correctOption");
+    }
+
+    private void disableClicks(){
+        option1layout.setClickable(false);
+        option2layout.setClickable(false);
+        option3layout.setClickable(false);
+        option4layout.setClickable(false);
+    }
+
+    private void enableClicks(){
+        option1layout.setClickable(true);
+        option2layout.setClickable(true);
+        option3layout.setClickable(true);
+        option4layout.setClickable(true);
     }
 
     private void startGameTimer(){
@@ -185,12 +277,16 @@ public class QuizPlayActivity extends AppCompatActivity {
             @Override
             public void onTick(long l) {
                 int seconds = (int) l/1000;
+                livePoint  = l/100;
                 timer.setText(String.valueOf(seconds));
             }
 
             @Override
             public void onFinish() {
                 //updatePoints();
+                livePoint = 0;
+                disableClicks();
+                updatePoints(livePoint);
             }
         };
 

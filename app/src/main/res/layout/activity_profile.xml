@@ -117,7 +117,7 @@
                 android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Harsh Rajput"
+                android:text="Ishan Gupta"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fs_22sp"
                 app:layout_constraintStart_toStartOf="parent"

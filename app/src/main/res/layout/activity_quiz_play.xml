@@ -268,6 +268,7 @@
                         android:orientation="vertical">
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/option1layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/white"
@@ -289,6 +290,7 @@
                                 android:textSize="@dimen/fs_16sp"/>
                         </androidx.cardview.widget.CardView>
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/option2layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/white"
@@ -313,6 +315,7 @@
                                 android:textSize="@dimen/fs_16sp"/>
                         </androidx.cardview.widget.CardView>
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/option3layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/white"
@@ -337,6 +340,7 @@
                                 android:textSize="@dimen/fs_16sp"/>
                         </androidx.cardview.widget.CardView>
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/option4layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/white"

@@ -9,6 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="ghost_blue">#F7F9F9</color>
     <color name="ghost_white">#FBFCFC</color>
+    <color name="green_70">#B353A772</color>
+    <color name="red_70">#B3FF3838</color>
     <color name="space_purple">#5664E9</color>
     <color name="space_white">#ECF0F1</color>
     <color name="grey">#707070</color>
