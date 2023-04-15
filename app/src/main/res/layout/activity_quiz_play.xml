@@ -132,106 +132,163 @@
                     android:id="@+id/questions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dim_30dp"
+                    android:layout_marginTop="@dimen/dim_30dp"
                     android:fontFamily="@font/nunito_bold"
                     android:text="Q. 1/5"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/fs_18sp"
                     app:layout_constraintBottom_toBottomOf="@id/main_layout"
                     app:layout_constraintEnd_toEndOf="@id/main_layout"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="@id/main_layout"
                     app:layout_constraintTop_toTopOf="@id/main_layout"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintVertical_bias="0"
-                    android:layout_marginTop="@dimen/dim_30dp"
-                    android:layout_marginStart="@dimen/dim_30dp"/>
+                    app:layout_constraintVertical_bias="0" />
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
                     android:id="@+id/question_progress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/questions"
-                    app:trackCornerRadius="@dimen/dim_20dp"
-                    app:trackThickness="@dimen/dim_12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="@dimen/dim_20dp"
+                    android:layout_marginTop="@dimen/dim_10dp"
+                    android:layout_marginEnd="@dimen/dim_20dp"
                     android:progress="20"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/questions"
                     app:layout_constraintVertical_bias="0"
-                    android:layout_marginStart="@dimen/dim_20dp"
-                    android:layout_marginEnd="@dimen/dim_20dp"
-                    android:layout_marginTop="@dimen/dim_10dp"
-                    />
+                    app:trackCornerRadius="@dimen/dim_20dp"
+                    app:trackThickness="@dimen/dim_12dp" />
 
                 <ImageView
                     android:id="@+id/timer_img"
                     android:layout_width="@dimen/dim_20dp"
                     android:layout_height="@dimen/dim_20dp"
+                    android:layout_marginEnd="@dimen/dim_8dp"
                     android:src="@drawable/clock"
-                    app:layout_constraintStart_toEndOf="@id/questions"
-                    app:layout_constraintTop_toTopOf="@id/questions"
                     app:layout_constraintBottom_toBottomOf="@id/questions"
                     app:layout_constraintEnd_toStartOf="@id/timer"
                     app:layout_constraintHorizontal_bias="1"
-                    android:layout_marginEnd="@dimen/dim_8dp"/>
+                    app:layout_constraintStart_toEndOf="@id/questions"
+                    app:layout_constraintTop_toTopOf="@id/questions" />
 
                 <TextView
                     android:id="@+id/timer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dim_30dp"
                     android:fontFamily="@font/nunito_bold"
                     android:text="12"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fs_18sp"
                     app:layout_constraintBottom_toBottomOf="@id/questions"
                     app:layout_constraintEnd_toEndOf="@id/main_layout"
+                    app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@id/questions"
                     app:layout_constraintTop_toTopOf="@id/questions"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintVertical_bias="0"
-                    android:layout_marginEnd="@dimen/dim_30dp"/>
+                    app:layout_constraintVertical_bias="0" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/question_progress"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/question_progress"
                     app:layout_constraintVertical_bias="0">
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:id="@+id/waiting_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dim_200dp"/>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.progressindicator.CircularProgressIndicator
+                                android:visibility="visible"
+                                android:id="@+id/circular_progress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:max="100"
+                                android:progress="66"
+                                app:indicatorSize="@dimen/dim_65dp"
+                                app:trackThickness="@dimen/dim_5dp"
+                                app:trackCornerRadius="@dimen/dim_80dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"/>
+
+                            <TextView
+                                android:id="@+id/waiting_timer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2"
+                                android:textColor="@color/grey"
+                                android:fontFamily="@font/nunito_extrabold"
+                                android:textSize="@dimen/fs_18sp"
+                                android:lineSpacingExtra="0dp"
+                                android:includeFontPadding="false"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/message"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dim_15dp"
+                            android:text="Game Starts in..."
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fs_18sp"
+                            android:fontFamily="@font/nunito_semibold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/question_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/dim_20dp"
                         android:layout_marginStart="@dimen/dim_30dp"
-                        android:layout_marginEnd="@dimen/dim_30dp">
+                        android:layout_marginTop="@dimen/dim_20dp"
+                        android:layout_marginEnd="@dimen/dim_30dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <Space
-                            android:visibility="gone"
                             android:id="@+id/space1"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dim_40dp"/>
+                            android:layout_height="@dimen/dim_40dp"
+                            android:visibility="gone" />
 
                         <androidx.cardview.widget.CardView
-                            android:visibility="visible"
                             android:id="@+id/question_img_container"
                             android:layout_width="@dimen/dim_250dp"
                             android:layout_height="@dimen/dim_180dp"
+                            android:layout_gravity="center"
+                            android:visibility="visible"
                             app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="@dimen/dim_20dp"
-                            app:cardElevation="@dimen/dim_5dp"
-                            android:layout_gravity="center">
+                            app:cardElevation="@dimen/dim_5dp">
 
                             <ImageView
                                 android:id="@+id/question_img"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/random"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/random" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -239,130 +296,133 @@
                             android:id="@+id/question"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dim_15dp"
+                            android:layout_marginBottom="@dimen/dim_10dp"
+                            android:fontFamily="@font/nunito_bold"
                             android:text="Where is Taj Mahal situated?"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/fs_24sp"
-                            android:fontFamily="@font/nunito_bold"
-                            android:layout_marginTop="@dimen/dim_15dp"
-                            android:layout_marginBottom="@dimen/dim_10dp"/>
+                            android:textSize="@dimen/fs_24sp" />
 
                         <Space
-                            android:visibility="gone"
                             android:id="@+id/space2"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dim_40dp"/>
+                            android:layout_height="@dimen/dim_40dp"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/options_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/question_layout"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintVertical_bias="0"
+                        android:orientation="vertical"
                         android:padding="@dimen/dim_32dp"
-                        android:orientation="vertical">
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/question_layout"
+                        app:layout_constraintVertical_bias="0">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/option1layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="@dimen/dim_20dp"
+                            android:layout_margin="@dimen/dim_5dp"
                             android:elevation="@dimen/dim_5dp"
-                            android:layout_margin="@dimen/dim_5dp">
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/dim_20dp">
 
                             <TextView
                                 android:id="@+id/option1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/dim_25dp"
+                                android:layout_marginTop="@dimen/dim_18dp"
+                                android:layout_marginEnd="@dimen/dim_18dp"
+                                android:layout_marginBottom="@dimen/dim_18dp"
+                                android:fontFamily="@font/nunito_semibold"
                                 android:text="A. Delhi"
                                 android:textColor="@color/grey"
-                                android:layout_marginTop="@dimen/dim_18dp"
-                                android:layout_marginBottom="@dimen/dim_18dp"
-                                android:layout_marginStart="@dimen/dim_25dp"
-                                android:layout_marginEnd="@dimen/dim_18dp"
-                                android:fontFamily="@font/nunito_semibold"
-                                android:textSize="@dimen/fs_16sp"/>
+                                android:textSize="@dimen/fs_16sp" />
                         </androidx.cardview.widget.CardView>
+
                         <androidx.cardview.widget.CardView
                             android:id="@+id/option2layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="@dimen/dim_20dp"
-                            android:elevation="@dimen/dim_5dp"
-                            android:layout_marginTop="@dimen/dim_15dp"
                             android:layout_marginStart="@dimen/dim_5dp"
+                            android:layout_marginTop="@dimen/dim_15dp"
                             android:layout_marginEnd="@dimen/dim_5dp"
-                            android:layout_marginBottom="@dimen/dim_5dp">
+                            android:layout_marginBottom="@dimen/dim_5dp"
+                            android:elevation="@dimen/dim_5dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/dim_20dp">
 
                             <TextView
                                 android:id="@+id/option2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/dim_25dp"
+                                android:layout_marginTop="@dimen/dim_18dp"
+                                android:layout_marginEnd="@dimen/dim_18dp"
+                                android:layout_marginBottom="@dimen/dim_18dp"
+                                android:fontFamily="@font/nunito_semibold"
                                 android:text="B. Mumbai"
                                 android:textColor="@color/grey"
-                                android:layout_marginTop="@dimen/dim_18dp"
-                                android:layout_marginBottom="@dimen/dim_18dp"
-                                android:layout_marginStart="@dimen/dim_25dp"
-                                android:layout_marginEnd="@dimen/dim_18dp"
-                                android:fontFamily="@font/nunito_semibold"
-                                android:textSize="@dimen/fs_16sp"/>
+                                android:textSize="@dimen/fs_16sp" />
                         </androidx.cardview.widget.CardView>
+
                         <androidx.cardview.widget.CardView
                             android:id="@+id/option3layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="@dimen/dim_20dp"
-                            android:elevation="@dimen/dim_5dp"
-                            android:layout_marginTop="@dimen/dim_15dp"
                             android:layout_marginStart="@dimen/dim_5dp"
+                            android:layout_marginTop="@dimen/dim_15dp"
                             android:layout_marginEnd="@dimen/dim_5dp"
-                            android:layout_marginBottom="@dimen/dim_5dp">
+                            android:layout_marginBottom="@dimen/dim_5dp"
+                            android:elevation="@dimen/dim_5dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/dim_20dp">
 
                             <TextView
                                 android:id="@+id/option3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/dim_25dp"
+                                android:layout_marginTop="@dimen/dim_18dp"
+                                android:layout_marginEnd="@dimen/dim_18dp"
+                                android:layout_marginBottom="@dimen/dim_18dp"
+                                android:fontFamily="@font/nunito_semibold"
                                 android:text="C. Agra"
                                 android:textColor="@color/grey"
-                                android:layout_marginTop="@dimen/dim_18dp"
-                                android:layout_marginBottom="@dimen/dim_18dp"
-                                android:layout_marginStart="@dimen/dim_25dp"
-                                android:layout_marginEnd="@dimen/dim_18dp"
-                                android:fontFamily="@font/nunito_semibold"
-                                android:textSize="@dimen/fs_16sp"/>
+                                android:textSize="@dimen/fs_16sp" />
                         </androidx.cardview.widget.CardView>
+
                         <androidx.cardview.widget.CardView
                             android:id="@+id/option4layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="@dimen/dim_20dp"
-                            android:elevation="@dimen/dim_5dp"
-                            android:layout_marginTop="@dimen/dim_15dp"
                             android:layout_marginStart="@dimen/dim_5dp"
+                            android:layout_marginTop="@dimen/dim_15dp"
                             android:layout_marginEnd="@dimen/dim_5dp"
-                            android:layout_marginBottom="@dimen/dim_5dp">
+                            android:layout_marginBottom="@dimen/dim_5dp"
+                            android:elevation="@dimen/dim_5dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/dim_20dp">
 
                             <TextView
                                 android:id="@+id/option4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/dim_25dp"
+                                android:layout_marginTop="@dimen/dim_18dp"
+                                android:layout_marginEnd="@dimen/dim_18dp"
+                                android:layout_marginBottom="@dimen/dim_18dp"
+                                android:fontFamily="@font/nunito_semibold"
                                 android:text="D. Chennai"
                                 android:textColor="@color/grey"
-                                android:layout_marginTop="@dimen/dim_18dp"
-                                android:layout_marginBottom="@dimen/dim_18dp"
-                                android:layout_marginStart="@dimen/dim_25dp"
-                                android:layout_marginEnd="@dimen/dim_18dp"
-                                android:fontFamily="@font/nunito_semibold"
-                                android:textSize="@dimen/fs_16sp"/>
+                                android:textSize="@dimen/fs_16sp" />
                         </androidx.cardview.widget.CardView>
 
 
@@ -371,13 +431,9 @@
                 </LinearLayout>
 
 
-
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
-
 
 
     </LinearLayout>

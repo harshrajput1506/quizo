@@ -1,5 +1,6 @@
 package in.hypernation.quizo.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -19,9 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.ObjectKey;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -35,6 +41,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -44,20 +51,23 @@ import in.hypernation.quizo.R;
 
 public class QuizPlayActivity extends AppCompatActivity {
 
-    private Dialog dialog;
     private CircleImageView player1image, player2image;
-    private TextView player1name, player2name, questions, questionTxt, option1, option2, option3, option4, timer, player1score, player2score;
+    private CircularProgressIndicator waitingProgress;
+    private LinearProgressIndicator questionProgress;
+    private TextView player1name, player2name, questions, questionTxt, option1, option2, option3, option4, timer, player1score, player2score, waitingTimer, message;
     private FirebaseFirestore db;
     private String roomID;
     private int currentQuestionNo = 1;
+    private int opponentQuestion = 1;
     private long totalQuestions = 5;
-    private LinearLayout questionLayout, optionLayout;
+    private LinearLayout questionLayout, optionLayout, waitingLayout;
     private JSONArray questionArray;
     private CardView questionImageLayout, option1layout, option2layout, option3layout, option4layout;
     private Space space1, space2;
     private ImageView questionImg;
     private String ans1, ans2, ans3, ans4, correctAns;
-    private double livePoint, totalScores;
+    private double livePoint, totalScores, opponentPoints;
+    private CountDownTimer gameTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +97,12 @@ public class QuizPlayActivity extends AppCompatActivity {
         option2layout = findViewById(R.id.option2layout);
         option3layout = findViewById(R.id.option3layout);
         option4layout = findViewById(R.id.option4layout);
+        waitingLayout = findViewById(R.id.waiting_layout);
+        waitingTimer = findViewById(R.id.waiting_timer);
+        message = findViewById(R.id.message);
+        waitingProgress = findViewById(R.id.circular_progress);
+        questionProgress = findViewById(R.id.question_progress);
+
 
         db = FirebaseFirestore.getInstance();
         SPManager.init(getApplicationContext());
@@ -102,8 +118,12 @@ public class QuizPlayActivity extends AppCompatActivity {
 
         roomID = getIntent().getStringExtra("roomID");
         Log.d("QuizPlay", "onCreate Quiz Play: "+roomID);
+
+        startWaiting("Game Starts in...");
+
+        //Live Snapshot Listener
         final DocumentReference df = db.collection("gameRooms").document(roomID);
-        df.addSnapshotListener((value, error) -> {
+        df.addSnapshotListener(QuizPlayActivity.this,(value, error) -> {
             if(error!=null){
                 Log.w("Realtime Firestore Error", "Listen failed.", error);
             }
@@ -111,84 +131,194 @@ public class QuizPlayActivity extends AppCompatActivity {
             if(value.exists()){
                 Map<String, Object> data = value.getData();
                 totalQuestions = (long) data.get("total_questions");
-                questions.setText("Q. "+currentQuestionNo+"/"+totalQuestions);
+                questionProgress.setMax((int) totalQuestions);
+
+
+
+                String playerTag = getIntent().getStringExtra("playerTag");
+                String opponentTag = Objects.equals(playerTag, "player1") ? "player2":"player1";
+
+                double liveOpponentPoints = value.getDouble(opponentTag+"points");
+                long liveOpponentQuestion = (long) data.get(opponentTag+"question");
+                Log.d("TAG", "onCreate: Realtime Data"+liveOpponentPoints+" lop "+opponentPoints);
+
+                if(liveOpponentQuestion>opponentQuestion && liveOpponentPoints>=opponentPoints){
+                    updateOpponentPoints(liveOpponentPoints);
+                    opponentQuestion = (int) liveOpponentQuestion;
+                }
+
+
+                Log.d("QuizPlayActivity", "onCreate: Firestore Value"+value.getDouble(playerTag+"points"));
+                Log.d("QuizPlayActivity", "onCreate: Firestore Data"+value.getData());
 
             }
 
         });
 
-        createWaitingDialog();
+        changeQuestionNo();
 
         //Listeners
 
         option1layout.setOnClickListener(v-> {
             disableClicks();
             if(Objects.equals(correctAns, ans1)){
-                option1layout.setCardBackgroundColor(getResources().getColor(R.color.green_70));
-                option1.setTextColor(getResources().getColor(R.color.white));
-                updatePoints(livePoint);
+                rightAns(option1layout, option1);
             } else {
-                option1layout.setCardBackgroundColor(getResources().getColor(R.color.red_70));
-                option1.setTextColor(getResources().getColor(R.color.white));
-                updatePoints(0);
+                wrongAns(option1layout, option1);
             }
         });
 
         option2layout.setOnClickListener(v->{
             disableClicks();
-            disableClicks();
             if(Objects.equals(correctAns, ans2)){
-                option2layout.setCardBackgroundColor(getResources().getColor(R.color.green_70));
-                option2.setTextColor(getResources().getColor(R.color.white));
-                updatePoints(livePoint);
+                rightAns(option2layout, option2);
             } else {
-                option2layout.setCardBackgroundColor(getResources().getColor(R.color.red_70));
-                option2.setTextColor(getResources().getColor(R.color.white));
-                updatePoints(0);
+                wrongAns(option2layout, option2);
             }
 
         });
 
         option3layout.setOnClickListener(v-> {
             disableClicks();
-            disableClicks();
             if(Objects.equals(correctAns, ans3)){
-                option3layout.setCardBackgroundColor(getResources().getColor(R.color.green_70));
-                option3.setTextColor(getResources().getColor(R.color.white));
-                updatePoints(livePoint);
+                rightAns(option3layout, option3);
             } else {
-                option3layout.setCardBackgroundColor(getResources().getColor(R.color.red_70));
-                option3.setTextColor(getResources().getColor(R.color.white));
-                updatePoints(0);
+                wrongAns(option3layout, option3);
             }
 
         });
 
         option4layout.setOnClickListener(v->{
             disableClicks();
-            disableClicks();
             if(Objects.equals(correctAns, ans4)){
-                option4layout.setCardBackgroundColor(getResources().getColor(R.color.green_70));
-                option4.setTextColor(getResources().getColor(R.color.white));
-                updatePoints(livePoint);
+                rightAns(option4layout, option4);
             } else {
-                option4layout.setCardBackgroundColor(getResources().getColor(R.color.red_70));
-                option4.setTextColor(getResources().getColor(R.color.white));
-                updatePoints(0);
+                wrongAns(option4layout, option4);
             }
 
         });
 
     }
 
+    private void rightAns(CardView card, TextView text){
+        gameTimer.cancel();
+        card.setCardBackgroundColor(getResources().getColor(R.color.green_70));
+        text.setTextColor(getResources().getColor(R.color.white));
+        text.setBackgroundColor(Color.TRANSPARENT);
+        updatePoints(livePoint);
+    }
+
+    private void wrongAns(CardView card, TextView text){
+        gameTimer.cancel();
+        card.setCardBackgroundColor(getResources().getColor(R.color.red_70));
+        text.setTextColor(getResources().getColor(R.color.white));
+        text.setBackgroundColor(Color.TRANSPARENT);
+        updatePoints(0);
+    }
+
+    private void changeQuestionNo() {
+        questions.setText("Q. "+currentQuestionNo+"/"+totalQuestions);
+        questionProgress.setProgress(currentQuestionNo);
+    }
+
     private void updatePoints(double point) {
         totalScores = totalScores+point;
+        String playerTag = getIntent().getStringExtra("playerTag");
+        Map<String, Object> updates = new HashMap<>();
+        updates.put(playerTag+"points", totalScores);
+        updates.put(playerTag+"question", currentQuestionNo+1);
+        db.collection("gameRooms").document(roomID).update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                updatePlayerPoints(point);
+                ++currentQuestionNo;
+                checkQuestionNo();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("TAG", "onFailure: ", e);
+            }
+        });
+    }
+
+    private void checkQuestionNo(){
+        new Handler().postDelayed( () -> {
+            if(totalQuestions>=currentQuestionNo){
+                //next question
+
+                startWaiting("Next Question in...");
+
+            }else {
+                //waiting result
+                waitingResult();
+            }
+        }, 2000);
+    }
+
+    private void waitingResult() {
+        Toast.makeText(this, "Quiz Complete", Toast.LENGTH_SHORT).show();
+    }
+
+    private void resetOptions() {
+        option1layout.setCardBackgroundColor(getResources().getColor(R.color.white));
+        option2layout.setCardBackgroundColor(getResources().getColor(R.color.white));
+        option3layout.setCardBackgroundColor(getResources().getColor(R.color.white));
+        option4layout.setCardBackgroundColor(getResources().getColor(R.color.white));
+        option1.setTextColor(getResources().getColor(R.color.grey));
+        option2.setTextColor(getResources().getColor(R.color.grey));
+        option3.setTextColor(getResources().getColor(R.color.grey));
+        option4.setTextColor(getResources().getColor(R.color.grey));
+
+    }
+
+    private void updateOpponentPoints(double points){
+        if(points==opponentPoints){
+            player2score.setText("0");
+            opponentPoints = points;
+            player2score.setTextColor(getResources().getColor(R.color.red_70));
+        } else {
+            double updatePoints = points-opponentPoints;
+            opponentPoints = points;
+            player2score.setText("+"+String.format("%.2f",updatePoints));
+            player2score.setTextColor(getResources().getColor(R.color.green_70));
+        }
+
+        new Handler().postDelayed( () -> {
+            if(points==0){
+                player2score.setText("0");
+                player2score.setTextColor(getResources().getColor(R.color.white));
+            } else {
+                player2score.setText(String.format("%.2f", points));
+                player2score.setTextColor(getResources().getColor(R.color.white));
+            }
+        }, 2000);
+    }
+
+    private void updatePlayerPoints(double points){
+        if(points==0){
+            player1score.setText("0");
+            player1score.setTextColor(getResources().getColor(R.color.red_70));
+        } else {
+            player1score.setText("+"+String.format("%.2f", points));
+            player1score.setTextColor(getResources().getColor(R.color.green_70));
+        }
+
+        new Handler().postDelayed( () -> {
+            if(totalScores==0){
+                player1score.setText("0");
+                player1score.setTextColor(getResources().getColor(R.color.white));
+            } else {
+                player1score.setText(String.format("%.2f", totalScores));
+                player1score.setTextColor(getResources().getColor(R.color.white));
+            }
+        }, 2000);
     }
 
     private void setProfiles(){
         String opponentName = getIntent().getStringExtra("opponentName");
         String opponentPicture = getIntent().getStringExtra("opponentPicture");
-
 
         String name = "You";
         String profilePicture = SPManager.getStringValue("profilePicture", "");
@@ -209,7 +339,6 @@ public class QuizPlayActivity extends AppCompatActivity {
 
     private void nextQuestion() throws JSONException{
         int index = (int) currentQuestionNo-1;
-        questions.setText("Q. "+currentQuestionNo+"/"+totalQuestions);
         JSONObject question = questionArray.getJSONObject(index);
         String questionLbl = question.getString("question");
         questionTxt.setText(questionLbl);
@@ -223,7 +352,7 @@ public class QuizPlayActivity extends AppCompatActivity {
             questionImageLayout.setVisibility(View.VISIBLE);
             String image = question.getString("image");
             if(image!="null"){
-                Glide.with(this).load(image).placeholder(R.drawable.random).into(questionImg);
+                Glide.with(QuizPlayActivity.this).load(image).thumbnail(0.05f).into(questionImg);
             }
         }
         questionLayout.setVisibility(View.VISIBLE);
@@ -234,7 +363,6 @@ public class QuizPlayActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            optionLayout.setVisibility(View.VISIBLE);
         }, 2000);
 
     }
@@ -255,6 +383,11 @@ public class QuizPlayActivity extends AppCompatActivity {
         option3.setText("C. "+option3Lbl);
         option4.setText("D. "+option4Lbl);
         correctAns = question.getString("correctOption");
+
+        resetOptions();
+        optionLayout.setVisibility(View.VISIBLE);
+        enableClicks();
+        pointTimer();
     }
 
     private void disableClicks(){
@@ -272,12 +405,19 @@ public class QuizPlayActivity extends AppCompatActivity {
     }
 
     private void startGameTimer(){
-        int endTime = 13;
-        CountDownTimer timer1 = new CountDownTimer(endTime*1000L, 1000) {
+        int endTime = 12;
+        try {
+            if(gameTimer!=null){
+                gameTimer.cancel();
+            }
+        }catch (Exception e){
+            Log.e("TAG", "startGameTimer: ",e );
+        }
+
+        gameTimer = new CountDownTimer(endTime*1000L, 1000) {
             @Override
             public void onTick(long l) {
                 int seconds = (int) l/1000;
-                livePoint  = l/100;
                 timer.setText(String.valueOf(seconds));
             }
 
@@ -290,46 +430,56 @@ public class QuizPlayActivity extends AppCompatActivity {
             }
         };
 
-        timer1.start();
+        gameTimer.start();
 
     }
 
-    private void createWaitingDialog(){
-        dialog = new Dialog(this);
-        ViewGroup viewGroup = findViewById(android.R.id.content);
-        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.lyt_dialog_play_quiz, viewGroup, false);
-        dialog.setContentView(view);
-        dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-
-        TextView message = view.findViewById(R.id.message);
-        ProgressBar progressBar = view.findViewById(R.id.circular_progress);
-        int endTime = 5;
-        progressBar.setMax(endTime);
-        progressBar.setProgress(endTime);
-        TextView timer = view.findViewById(R.id.timer);
-
-        CountDownTimer countDownTimer = new CountDownTimer(endTime*1000L, 1000) {
+    private void pointTimer() {
+        int endTime = 10;
+        CountDownTimer countDownTimer = new CountDownTimer(endTime*1000, 10) {
             @Override
             public void onTick(long l) {
-                int seconds = (int) l/1000;
-                progressBar.setProgress(seconds);
-                timer.setText(String.valueOf(seconds));
+                livePoint  = (double) l/1000;
             }
 
             @Override
             public void onFinish() {
-                dialog.cancel();
+                livePoint = 0;
+            }
+        };
+        countDownTimer.start();
+    }
+
+    private void startWaiting(String msg){
+        questions.setText("Q. "+currentQuestionNo+"/"+totalQuestions);
+        questionProgress.setProgress(currentQuestionNo);
+        timer.setText("12");
+        questionLayout.setVisibility(View.GONE);
+        optionLayout.setVisibility(View.GONE);
+        waitingLayout.setVisibility(View.VISIBLE);
+
+        message.setText(msg);
+        int endTime = 5;
+        waitingProgress.setMax(endTime);
+        waitingProgress.setProgress(endTime);
+
+        CountDownTimer countDownTimer = new CountDownTimer(endTime*1000L, 1000) {
+            @Override
+            public void onTick(long l) {
+                int second = (int) l/1000;
+                waitingTimer.setText(String.valueOf(second));
+                waitingProgress.setProgress(second);
+            }
+
+            @Override
+            public void onFinish() {
+                waitingLayout.setVisibility(View.GONE);
                 try {
                     gameStarts();
                 } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
             }
-        };
-
-        countDownTimer.start();
-
-        dialog.show();
+        }.start();
     }
 }

@@ -37,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import in.hypernation.quizo.Constant;
@@ -62,6 +63,32 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private LottieAnimationView searchingPlayer;
     private View parentLayout;
     private ImageView versus;
+    private Boolean isGameStarts = false;
+    private final String TAG = "WaitingRoomActivity";
+    private Boolean isStop = false;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: WRA Status");
+        changeRoomStatus("Destroy");
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG, "onStop: WRA Status");
+        super.onStop();
+        isStop = true;
+        changeRoomStatus("InActive");
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.d(TAG, "onRestart: WRA Status");
+        super.onRestart();
+        if(isStop) changeRoomStatus("Open");
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +126,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
         Glide.with(this).load(player1_picture).placeholder(R.drawable.profileavatar).into(player1picture);
 
         final DocumentReference doc = db.collection("gameRooms").document(RoomID);
-        doc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        doc.addSnapshotListener(WaitingRoomActivity.this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
@@ -128,7 +155,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
                         //Check question Set is available or not
                         if(data.containsKey("questionSet")) {
                             String questionSet = (String) data.get("questionSet");
-                            gameStart(data, questionSet);
+                            if(!isGameStarts) gameStart(data, questionSet);
                         } else {
                             //set data on quizPool model
                             Pool quizPool = new Pool();
@@ -245,15 +272,18 @@ public class WaitingRoomActivity extends AppCompatActivity {
     }
 
     private void gameStart(Map<String, Object> data, String questionSet){
+        isGameStarts = true;
         progressBar.setVisibility(View.INVISIBLE);
         versus.setVisibility(View.VISIBLE);
         new Handler().postDelayed( () -> {
-            String playerTag = getIntent().getStringExtra("opponentTag");
+            String opponentTag = getIntent().getStringExtra("opponentTag");
+            String playerTag = Objects.equals(opponentTag, "player1") ? "player2":"player1";
             Intent i = new Intent(WaitingRoomActivity.this, QuizPlayActivity.class);
             i.putExtra("roomID", RoomID);
-            i.putExtra("opponentName", (String) data.get(playerTag+"name"));
-            i.putExtra("opponentPicture", (String) data.get(playerTag+"picture"));
+            i.putExtra("opponentName", (String) data.get(opponentTag+"name"));
+            i.putExtra("opponentPicture", (String) data.get(opponentTag+"picture"));
             i.putExtra("questionSet", questionSet);
+            i.putExtra("playerTag", playerTag);
             startActivity(i);
             WaitingRoomActivity.this.finish();
         }, 2000);

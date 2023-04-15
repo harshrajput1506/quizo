@@ -61,7 +61,6 @@ public class TopicActivity extends AppCompatActivity {
     private boolean isPayClickable = true;
     private ArrayList<Pool> poolList;
     private RecyclerView topicRV;
-
     private BottomSheetDialog bottomSheetDialog;
     private ImageView icon, backBtn;
     private TextView title, descriptionTxt, prizePool, playersJoined, bonus, entryBtnTxt;
@@ -434,6 +433,7 @@ public class TopicActivity extends AppCompatActivity {
         body.put("depositEntry", depositEntry);
         body.put("winningEntry", winningEntry);
         body.put("bonusEntry", bonusEntry);
+        body.put("amountType", "real");
 
 
         VolleyCallRequest patchRequest = new VolleyCallRequest(getApplicationContext(), url, body, token,new VolleyRequestListener() {
@@ -442,6 +442,7 @@ public class TopicActivity extends AppCompatActivity {
                 try {
                     if(response.getInt("success")==1){
                         getRoomByPoolID(pool, entryData);
+                        updatePoolJoining(pool);
                     }
                 } catch (JSONException e){
                     loadingDialogAdapter.dismissAllowingStateLoss();
@@ -454,12 +455,35 @@ public class TopicActivity extends AppCompatActivity {
             @Override
             public void onError(VolleyError error) {
                 loadingDialogAdapter.dismissAllowingStateLoss();
-                Log.d("Pool Payment", "onSuccess: "+error);
+                Log.d("Pool Payment", "onError: "+error);
                 Snackbar.make(parentLayout, "Something Went Wrong", Snackbar.LENGTH_LONG).show();
             }
         });
 
         patchRequest.callPatchRequest();
+    }
+
+    private void updatePoolJoining(Pool pool) throws JSONException{
+        int playerJoined = pool.getPlayersJoined();
+        int update = playerJoined==1 ? 0:1;
+        String url = Constant.QUIZ_URL+"/1950/pool/joining";
+        JSONObject body = new JSONObject();
+        body.put("playersJoined", update);
+        body.put("poolID", pool.getPoolID());
+        VolleyCallRequest volleyCallRequest = new VolleyCallRequest(getApplicationContext(), url, body, new VolleyRequestListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Log.d("Pool Payment", "onSuccess: "+response);
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.d("Pool Payment", "onError: "+error);
+            }
+        });
+
+        volleyCallRequest.callPostRequestWithoutAuth();
+
     }
 
     private void getRoomByPoolID(Pool pool, double[] entryData){
@@ -493,6 +517,7 @@ public class TopicActivity extends AppCompatActivity {
         addData.put("player1name", name);
         addData.put("player1picture", profilePicture);
         addData.put("playersJoined", 1);
+        addData.put("player1question", 1);
         addData.put("status", "Open");
         addData.put("winnerStatus", "Pending");
         addData.put("player1points", 0);
@@ -595,6 +620,7 @@ public class TopicActivity extends AppCompatActivity {
         updates.put("playersJoined", 2);
         updates.put("player2status", "Online");
         updates.put("player2points", 0);
+        updates.put("player2question", 1);
 
         DocumentReference doc = db.collection("gameRooms").document(roomID);
 

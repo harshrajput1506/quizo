@@ -38,6 +38,13 @@ public class VolleyCallRequest {
         this.volleyRequestListener=volleyRequestListener;
     }
 
+    public VolleyCallRequest(Context context, String url, JSONObject body,VolleyRequestListener volleyRequestListener){
+        this.context = context;
+        this.url = url;
+        this.body=body;
+        this.volleyRequestListener=volleyRequestListener;
+    }
+
     public void callGetRequest(){
         queue = VolleySingleton.getInstance(context).getRequestQueue();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, volleyRequestListener::onSuccess, volleyRequestListener::onError);
@@ -54,6 +61,12 @@ public class VolleyCallRequest {
                 return headers;
             }
         };
+        VolleySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public void callPostRequestWithoutAuth(){
+        queue = VolleySingleton.getInstance(context).getRequestQueue();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, body, volleyRequestListener::onSuccess, volleyRequestListener::onError);
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
 
