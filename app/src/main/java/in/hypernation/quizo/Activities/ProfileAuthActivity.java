@@ -74,13 +74,13 @@ public class ProfileAuthActivity extends AppCompatActivity implements AuthProfil
         dismissProgressBar();
 
         avatars = new ArrayList<>();
-        avatars.add("https://api.hypernation.in/res/uploads/avatar.png");
-        avatars.add("https://api.hypernation.in/res/uploads/avatar1.png");
-        avatars.add("https://api.hypernation.in/res/uploads/avatar9.png");
-        avatars.add("https://api.hypernation.in/res/uploads/avatar11.png");
-        avatars.add("https://api.hypernation.in/res/uploads/avatar2.png");
-        avatars.add("https://api.hypernation.in/res/uploads/avatar3.png");
-        avatars.add("https://api.hypernation.in/res/uploads/avatar5.png");
+        avatars.add("https://api.quizo.fun/res/uploads/avatar.png");
+        avatars.add("https://api.quizo.fun/res/uploads/avatar1.png");
+        avatars.add("https://api.quizo.fun/res/uploads/avatar9.png");
+        avatars.add("https://api.quizo.fun/res/uploads/avatar11.png");
+        avatars.add("https://api.quizo.fun/res/uploads/avatar2.png");
+        avatars.add("https://api.quizo.fun/res/uploads/avatar3.png");
+        avatars.add("https://api.quizo.fun/res/uploads/avatar5.png");
 
         selectedAvatarURL = avatars.get(0);
 

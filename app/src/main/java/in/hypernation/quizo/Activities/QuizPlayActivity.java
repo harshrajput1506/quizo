@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,12 +23,15 @@ import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -46,7 +50,10 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import in.hypernation.quizo.Constant;
+import in.hypernation.quizo.Listeners.VolleyRequestListener;
 import in.hypernation.quizo.Managers.SPManager;
+import in.hypernation.quizo.Managers.VolleyCallRequest;
 import in.hypernation.quizo.R;
 
 public class QuizPlayActivity extends AppCompatActivity {
@@ -54,19 +61,22 @@ public class QuizPlayActivity extends AppCompatActivity {
     private CircleImageView player1image, player2image;
     private CircularProgressIndicator waitingProgress;
     private LinearProgressIndicator questionProgress;
-    private TextView player1name, player2name, questions, questionTxt, option1, option2, option3, option4, timer, player1score, player2score, waitingTimer, message;
+    private TextView player1name, player2name, questions, questionTxt, option1, option2, option3, option4, timer, player1score, player2score, waitingTimer, message, remarks;
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
     private String roomID;
     private int currentQuestionNo = 1;
     private int opponentQuestion = 1;
     private long totalQuestions = 5;
+    private int prizePool;
     private LinearLayout questionLayout, optionLayout, waitingLayout;
     private JSONArray questionArray;
     private CardView questionImageLayout, option1layout, option2layout, option3layout, option4layout;
     private Space space1, space2;
     private ImageView questionImg;
     private String ans1, ans2, ans3, ans4, correctAns;
-    private double livePoint, totalScores, opponentPoints;
+    private double livePoint, totalScores, opponentPoints, playerPoints;
     private CountDownTimer gameTimer;
 
     @Override
@@ -102,9 +112,12 @@ public class QuizPlayActivity extends AppCompatActivity {
         message = findViewById(R.id.message);
         waitingProgress = findViewById(R.id.circular_progress);
         questionProgress = findViewById(R.id.question_progress);
+        remarks = findViewById(R.id.remarks);
 
 
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
         SPManager.init(getApplicationContext());
 
         setProfiles();
@@ -119,7 +132,7 @@ public class QuizPlayActivity extends AppCompatActivity {
         roomID = getIntent().getStringExtra("roomID");
         Log.d("QuizPlay", "onCreate Quiz Play: "+roomID);
 
-        startWaiting("Game Starts in...");
+        startWaiting("Game Starts in...", false, false);
 
         //Live Snapshot Listener
         final DocumentReference df = db.collection("gameRooms").document(roomID);
@@ -133,18 +146,37 @@ public class QuizPlayActivity extends AppCompatActivity {
                 totalQuestions = (long) data.get("total_questions");
                 questionProgress.setMax((int) totalQuestions);
 
-
+                long pool = (long) data.get("prizePool");
+                prizePool = (int) pool;
 
                 String playerTag = getIntent().getStringExtra("playerTag");
                 String opponentTag = Objects.equals(playerTag, "player1") ? "player2":"player1";
 
                 double liveOpponentPoints = value.getDouble(opponentTag+"points");
+                double livePlayerPoints = value.getDouble(playerTag+"points");
                 long liveOpponentQuestion = (long) data.get(opponentTag+"question");
+                long livePlayerQuestion = (long) data.get(playerTag+"question");
                 Log.d("TAG", "onCreate: Realtime Data"+liveOpponentPoints+" lop "+opponentPoints);
 
                 if(liveOpponentQuestion>opponentQuestion && liveOpponentPoints>=opponentPoints){
                     updateOpponentPoints(liveOpponentPoints);
                     opponentQuestion = (int) liveOpponentQuestion;
+                }
+
+                if(livePlayerQuestion==totalQuestions && liveOpponentQuestion==totalQuestions){
+                    if(livePlayerPoints>liveOpponentPoints){
+                        String uid = SPManager.getStringValue("uid", "");
+                        gameEnd(true, playerTag, uid, false, null, livePlayerPoints, liveOpponentPoints);
+                    } else if (livePlayerPoints<liveOpponentPoints) {
+                        String uid = value.getString(opponentTag+"id");
+                        gameEnd(false, opponentTag, uid, false, null, livePlayerPoints, liveOpponentPoints);
+
+                    } else {
+                        String[] multipleWinners = {playerTag, opponentTag};
+                        String uid = value.getString(opponentTag+"id");
+                        gameEnd(true, "both", uid, true, multipleWinners, livePlayerPoints, liveOpponentPoints);
+                    }
+
                 }
 
 
@@ -206,6 +238,7 @@ public class QuizPlayActivity extends AppCompatActivity {
         text.setTextColor(getResources().getColor(R.color.white));
         text.setBackgroundColor(Color.TRANSPARENT);
         updatePoints(livePoint);
+        playerPoints=livePoint;
     }
 
     private void wrongAns(CardView card, TextView text){
@@ -214,6 +247,7 @@ public class QuizPlayActivity extends AppCompatActivity {
         text.setTextColor(getResources().getColor(R.color.white));
         text.setBackgroundColor(Color.TRANSPARENT);
         updatePoints(0);
+        playerPoints=0;
     }
 
     private void changeQuestionNo() {
@@ -226,21 +260,13 @@ public class QuizPlayActivity extends AppCompatActivity {
         String playerTag = getIntent().getStringExtra("playerTag");
         Map<String, Object> updates = new HashMap<>();
         updates.put(playerTag+"points", totalScores);
-        updates.put(playerTag+"question", currentQuestionNo+1);
-        db.collection("gameRooms").document(roomID).update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                updatePlayerPoints(point);
-                ++currentQuestionNo;
-                checkQuestionNo();
+        updates.put(playerTag+"question", currentQuestionNo);
+        db.collection("gameRooms").document(roomID).update(updates).addOnSuccessListener(unused -> {
+            updatePlayerPoints(point);
+            ++currentQuestionNo;
+            checkQuestionNo();
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("TAG", "onFailure: ", e);
-            }
-        });
+        }).addOnFailureListener(e -> Log.e("TAG", "onFailure: ", e));
     }
 
     private void checkQuestionNo(){
@@ -248,17 +274,98 @@ public class QuizPlayActivity extends AppCompatActivity {
             if(totalQuestions>=currentQuestionNo){
                 //next question
 
-                startWaiting("Next Question in...");
+                startWaiting("Next Question in...", true, false);
 
             }else {
                 //waiting result
                 waitingResult();
             }
-        }, 2000);
+        }, 1500);
     }
 
     private void waitingResult() {
-        Toast.makeText(this, "Quiz Complete", Toast.LENGTH_SHORT).show();
+        startWaiting("Waiting for Result...", false, true);
+        //TODO: Waiting logic for 30 seconds if opponent got exit or disconnect or opponent status is idle then user wins the game
+    }
+
+    private void gameEnd(boolean winner, String winnerStatus, String winnerId, boolean isMultipleWinners, String[] multipleWinners, double playerPoints, double opponentPoints){
+        if(winner){
+            if(!isMultipleWinners){
+                Map<String, Object> updates = new HashMap<>();
+                updates.put("status", "Completed");
+                updates.put("winnerStatus", winnerStatus);
+                updates.put("winnerId", winnerId);
+                db.collection("gameRooms").document(roomID).update(updates).addOnSuccessListener(unused -> {
+                    //TODO: You are the winner - Open new screen result activity with some intent data -> winner(true), picture, pool, scores, names
+                    if(prizePool!=0){
+                        user.getIdToken(true).addOnCompleteListener(task -> {
+                            if(task.isSuccessful()){
+                                String token = task.getResult().getToken();
+                                try {
+                                    patchUpdateBalance(token);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+
+                        });
+                    }
+                }).addOnFailureListener(e -> Log.e("TAG", "gameEnd: ", e));
+            } else {
+                //TODO: Multiple winners
+                Log.d("TAG", "gameEnd: Multiple Winners"+multipleWinners.toString());
+            }
+        } else {
+            //patchUpdateLevel();
+            //TODO: You are not the winner - Open new screen result activity with some intent data -> winner(false), picture, pool, scores, names
+            Log.d("TAG", "gameEnd: Patch Update Level");
+        }
+
+        Intent i = new Intent(QuizPlayActivity.this, QuizResultActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("prizePool", prizePool);
+        String opponentName = getIntent().getStringExtra("opponentName");
+        String opponentPicture = getIntent().getStringExtra("opponentPicture");
+        bundle.putString("opponentName", opponentName);
+        bundle.putString("opponentPicture", opponentPicture);
+        bundle.putDouble("playerPoints", playerPoints);
+        bundle.putDouble("opponentPoints", opponentPoints);
+        bundle.putBoolean("winner", winner);
+        i.putExtra("data", bundle);
+        startActivity(i);
+        QuizPlayActivity.this.finish();
+
+    }
+
+    private void patchUpdateBalance(String token) throws JSONException{
+        String query = Constant.USER_URL+"wallet/game/1101";
+        String uid = SPManager.getStringValue("uid", "");
+        JSONObject body = new JSONObject();
+        body.put("uid", uid);
+        body.put("bonusAmount", 0);
+        body.put("depositAmount", 0);
+        body.put("gameID", roomID);
+        body.put("gameType", "room");
+        body.put("amountType", "real");
+        body.put("winningAmount", prizePool);
+
+        VolleyCallRequest volleyCallRequest = new VolleyCallRequest(getApplicationContext(), query, body, token, new VolleyRequestListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if(response.getInt("success")==1) Log.d("TAG", "onSuccess: Completed");
+                } catch(JSONException e){
+                    Log.e("TAG", "onSuccess: ", e);
+                }
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.e("TAG", "onError: Volley Patch Update Balance ", error);
+            }
+        });
+        volleyCallRequest.callPatchRequest();
     }
 
     private void resetOptions() {
@@ -450,7 +557,7 @@ public class QuizPlayActivity extends AppCompatActivity {
         countDownTimer.start();
     }
 
-    private void startWaiting(String msg){
+    private void startWaiting(String msg, boolean remarkStatus, boolean isEnd){
         questions.setText("Q. "+currentQuestionNo+"/"+totalQuestions);
         questionProgress.setProgress(currentQuestionNo);
         timer.setText("12");
@@ -463,23 +570,52 @@ public class QuizPlayActivity extends AppCompatActivity {
         waitingProgress.setMax(endTime);
         waitingProgress.setProgress(endTime);
 
-        CountDownTimer countDownTimer = new CountDownTimer(endTime*1000L, 1000) {
-            @Override
-            public void onTick(long l) {
-                int second = (int) l/1000;
-                waitingTimer.setText(String.valueOf(second));
-                waitingProgress.setProgress(second);
+        if(remarkStatus){
+            remarks.setVisibility(View.VISIBLE);
+            if(playerPoints>=8 && playerPoints<=10){
+                remarks.setText("EXCELLENT");
+                remarks.setTextColor(getResources().getColor(R.color.green_70));
+            } else if (playerPoints>=5 && playerPoints<8) {
+                remarks.setText("GOOD");
+                remarks.setTextColor(getResources().getColor(R.color.green_70));
+            } else if (playerPoints>=3 && playerPoints<5) {
+                remarks.setText("SLOW");
+                remarks.setTextColor(getResources().getColor(R.color.green_70));
+            } else if (playerPoints==0) {
+                remarks.setText("WRONG ANSWER");
+                remarks.setTextColor(getResources().getColor(R.color.red_70));
+            } else{
+                remarks.setText("TOO SLOW");
+                remarks.setTextColor(getResources().getColor(R.color.green_70));
             }
+        } else {
+            remarks.setVisibility(View.GONE);
+        }
 
-            @Override
-            public void onFinish() {
-                waitingLayout.setVisibility(View.GONE);
-                try {
-                    gameStarts();
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+        if(isEnd){
+            waitingTimer.setVisibility(View.GONE);
+            waitingProgress.setIndeterminate(true);
+        } else {
+            new CountDownTimer(endTime * 1000L, 1000) {
+                @Override
+                public void onTick(long l) {
+                    int second = (int) l / 1000;
+                    waitingTimer.setText(String.valueOf(second));
+                    waitingProgress.setProgress(second);
                 }
-            }
-        }.start();
+
+                @Override
+                public void onFinish() {
+                    waitingLayout.setVisibility(View.GONE);
+                    try {
+                        gameStarts();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }.start();
+        }
+
+
     }
 }

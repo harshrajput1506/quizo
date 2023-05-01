@@ -66,6 +66,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private Boolean isGameStarts = false;
     private final String TAG = "WaitingRoomActivity";
     private Boolean isStop = false;
+    private String token;
 
     @Override
     protected void onDestroy() {
@@ -359,6 +360,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
         body.put("winningBalance", winningBalance);
         body.put("bonusBalance", bonusBalance);
         body.put("totalBalance", totalBalance);
+        body.put("amountType", "real");
         body.put("type", "Refund");
         body.put("title", "Refund of A Game");
         body.put("message", transMessage);

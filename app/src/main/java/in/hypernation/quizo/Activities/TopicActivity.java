@@ -70,7 +70,8 @@ public class TopicActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private TopicFragmentRefresh topicFragmentRefresh;
     private TopicRuleRefresh topicRuleRefresh;
-    private int currentPoolPosition = 0;
+    private int currentPoolPosition = 0, transactionId;
+    private final String GAME_TYPE = "room";
     private View parentLayout;
     private LoadingDialogAdapter loadingDialogAdapter;
     private FirebaseUser user;
@@ -441,6 +442,8 @@ public class TopicActivity extends AppCompatActivity {
             public void onSuccess(JSONObject response) {
                 try {
                     if(response.getInt("success")==1){
+                        JSONObject data = response.getJSONObject("data");
+                        transactionId = data.getInt("transactionId");
                         getRoomByPoolID(pool, entryData);
                         updatePoolJoining(pool);
                     }
@@ -461,6 +464,44 @@ public class TopicActivity extends AppCompatActivity {
         });
 
         patchRequest.callPatchRequest();
+    }
+
+    private void updateTransactionData(String gameId) {
+        user.getIdToken(false).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                String token = task.getResult().getToken();
+                callUpdateTransactionRequest(token, gameId);
+            }
+        });
+    }
+
+    private void callUpdateTransactionRequest(String token, String gameId) {
+        try {
+            String uid = SPManager.getStringValue("uid", "");
+            String url = Constant.USER_URL+"transaction/game/5102";
+            JSONObject body = new JSONObject();
+            body.put("uid", uid);
+            body.put("transactionID", transactionId);
+            body.put("gameType", GAME_TYPE);
+            body.put("gameID", gameId);
+
+            VolleyCallRequest volleyCallRequest = new VolleyCallRequest(getApplicationContext(), url, body, token, new VolleyRequestListener() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    Log.d("TAG", "onSuccess: Transaction Update "+response.toString());
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    Log.e("TAG", "onError: Volley", error);
+                }
+            });
+
+            volleyCallRequest.callPostRequest();
+
+        } catch (JSONException e){
+            Log.e("TAG", "JSONException: ",e);
+        }
     }
 
     private void updatePoolJoining(Pool pool) throws JSONException{
@@ -510,7 +551,7 @@ public class TopicActivity extends AppCompatActivity {
 
     private void createNewRoom(Pool pool, double[] entryData) {
         String name = SPManager.getStringValue("name", "master");
-        String profilePicture = SPManager.getStringValue("profilePicture", "https://api.hypernation.in/res/uploads/avatar.png");
+        String profilePicture = SPManager.getStringValue("profilePicture", "https://api.quizo.fun/res/uploads/avatar.png");
         String uid = SPManager.getStringValue("uid", "").trim();
         Map<String, Object> addData = new HashMap<>();
         addData.put("player1id", uid);
@@ -541,6 +582,7 @@ public class TopicActivity extends AppCompatActivity {
                     String token = task.getResult().getToken();
                     try {
                         updateQuestionsSet(pool, roomID, token);
+                        updateTransactionData(roomID);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -611,7 +653,7 @@ public class TopicActivity extends AppCompatActivity {
     private void updateExistingRoom(String roomID, double[] entryData) {
         Map<String, Object> updates = new HashMap<>();
         String name = SPManager.getStringValue("name", "master");
-        String profilePicture = SPManager.getStringValue("profilePicture", "https://api.hypernation.in/res/uploads/avatar.png");
+        String profilePicture = SPManager.getStringValue("profilePicture", "https://api.quizo.fun/res/uploads/avatar.png");
         String uid = SPManager.getStringValue("uid", "").trim();
         updates.put("player2name", name);
         updates.put("player2picture", profilePicture);
@@ -622,6 +664,7 @@ public class TopicActivity extends AppCompatActivity {
         updates.put("player2points", 0);
         updates.put("player2question", 1);
 
+        updateTransactionData(roomID);
         DocumentReference doc = db.collection("gameRooms").document(roomID);
 
         doc.update(updates).addOnCompleteListener(task -> {
@@ -668,6 +711,7 @@ public class TopicActivity extends AppCompatActivity {
         body.put("winningBalance", winningBalance);
         body.put("bonusBalance", bonusBalance);
         body.put("totalBalance", totalBalance);
+        body.put("amountType","real");
         body.put("type", "Refund");
         body.put("title", "Refund of A Game");
         body.put("message", transMessage);

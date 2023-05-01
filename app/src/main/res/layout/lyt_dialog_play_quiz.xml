@@ -12,6 +12,16 @@
         android:layout_margin="@dimen/dim_40dp"
         android:gravity="center">
 
+        <TextView
+            android:id="@+id/remarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EXCELLENT"
+            android:textColor="@color/green_70"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="@dimen/fs_30sp"
+            android:layout_marginBottom="@dimen/dim_25dp"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -41,6 +51,8 @@
                 android:textSize="@dimen/fs_16sp"
                 android:lineSpacingExtra="0dp"
                 android:includeFontPadding="false"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

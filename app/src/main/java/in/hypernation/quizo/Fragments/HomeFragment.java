@@ -29,9 +29,11 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import in.hypernation.quizo.Activities.AllTopicsActivity;
 import in.hypernation.quizo.Activities.ProfileActivity;
+import in.hypernation.quizo.Activities.QuizResultActivity;
 import in.hypernation.quizo.Activities.TopicActivity;
 import in.hypernation.quizo.Adapters.LivePoolAdapter;
 import in.hypernation.quizo.Adapters.TopicsAdapter;
+import in.hypernation.quizo.Constant;
 import in.hypernation.quizo.Listeners.HomeRecyclerViewListener;
 import in.hypernation.quizo.Listeners.VolleyRequestListener;
 import in.hypernation.quizo.Managers.SPManager;
@@ -122,14 +124,11 @@ public class HomeFragment extends Fragment {
         });
 
         //RecyclerView Listeners
-        homeRecyclerViewListener = new HomeRecyclerViewListener() {
-            @Override
-            public void onTopicClick(Topic topic) {
-                Intent i = new Intent(getActivity(), TopicActivity.class);
-                String[] topicData  = {topic.getTitle(), topic.getIcon(), topic.getDescription()};
-                i.putExtra("topicData", topicData);
-                startActivity(i);
-            }
+        homeRecyclerViewListener = topic -> {
+            Intent i = new Intent(getActivity(), TopicActivity.class);
+            String[] topicData  = {topic.getTitle(), topic.getIcon(), topic.getDescription()};
+            i.putExtra("topicData", topicData);
+            startActivity(i);
         };
 
         //Set User Credentials
@@ -175,7 +174,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getTopics() throws JSONException {
-        String url = "https://api.hypernation.in/hyperquizo/api/v1/quiz/topics";
+        String url = Constant.QUIZ_URL+"topics";
         VolleyCallRequest volleyCallRequest = new VolleyCallRequest(getContext(), url, new VolleyRequestListener() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -207,7 +206,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getLivePools(){
-        String url = "https://api.hypernation.in/hyperquizo/api/v1/quiz/pool/live";
+        String url = Constant.QUIZ_URL +"pool/live";
         VolleyCallRequest volleyCallRequest = new VolleyCallRequest(getContext(), url, new VolleyRequestListener() {
             @Override
             public void onSuccess(JSONObject response) {

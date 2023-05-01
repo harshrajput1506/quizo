@@ -210,6 +210,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dim_200dp"/>
 
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/remarks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="EXCELLENT"
+                            android:textColor="@color/green_70"
+                            android:fontFamily="@font/nunito_bold"
+                            android:textSize="@dimen/fs_30sp"
+                            android:layout_marginBottom="@dimen/dim_25dp"/>
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">

@@ -17,6 +17,10 @@
         android:theme="@style/Theme.Quizo"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.QuizResultActivity"
+            android:theme="@style/Theme.Auth"
+            android:exported="false" />
+        <activity
             android:name=".Activities.QuizPlayActivity"
             android:exported="false" />
         <activity
