@@ -78,6 +78,7 @@ public class QuizPlayActivity extends AppCompatActivity {
     private String ans1, ans2, ans3, ans4, correctAns;
     private double livePoint, totalScores, opponentPoints, playerPoints;
     private CountDownTimer gameTimer;
+    private boolean isGameEnd = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +164,8 @@ public class QuizPlayActivity extends AppCompatActivity {
                     opponentQuestion = (int) liveOpponentQuestion;
                 }
 
-                if(livePlayerQuestion==totalQuestions && liveOpponentQuestion==totalQuestions){
+                if(livePlayerQuestion==totalQuestions && liveOpponentQuestion==totalQuestions && !isGameEnd){
+                    isGameEnd=true;
                     if(livePlayerPoints>liveOpponentPoints){
                         String uid = SPManager.getStringValue("uid", "");
                         gameEnd(true, playerTag, uid, false, null, livePlayerPoints, liveOpponentPoints);
