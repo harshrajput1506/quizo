@@ -172,9 +172,6 @@ public class ProfileAuthActivity extends AppCompatActivity implements AuthProfil
                         }
                         dismissProgressBar();
                         Toast.makeText(getApplicationContext(), "Profile Completed", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(ProfileAuthActivity.this, HomeActivity.class);
-                        startActivity(i);
-                        finish();
                     } else {
                         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
                     }
@@ -195,6 +192,9 @@ public class ProfileAuthActivity extends AppCompatActivity implements AuthProfil
                 dismissProgressBar();
             }
         });
+        Intent i = new Intent(ProfileAuthActivity.this, MainActivity.class);
+        startActivity(i);
+        finish();
         volleyCallRequest.callPutRequest();
     }
 
