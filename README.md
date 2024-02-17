@@ -9,6 +9,7 @@ Welcome to Quizo, the ultimate trivia challenge app! Quizo offers a wide variety
 
 ## Screenshots
 
-<img src="https://firebasestorage.googleapis.com/v0/b/quiz-a192b.appspot.com/o/Home%20Screen%20Prototype.png?alt=media&token=68d125c7-26e8-46fa-a7f0-8222c66e6bba" width="30%" height="20%">
-<img src="https://firebasestorage.googleapis.com/v0/b/quiz-a192b.appspot.com/o/Onboard%20ArtWork%201.png?alt=media&token=73f6e05d-b724-42c5-a757-496ee49f003e" width="30%" height="20%">
+<img src="https://firebasestorage.googleapis.com/v0/b/quiz-a192b.appspot.com/o/Onboard%20ArtWork%201.png?alt=media&token=73f6e05d-b724-42c5-a757-496ee49f003e" width="80%" height="50%">
+<img src="https://firebasestorage.googleapis.com/v0/b/quiz-a192b.appspot.com/o/Home%20Screen%20Prototype.png?alt=media&token=68d125c7-26e8-46fa-a7f0-8222c66e6bba" width="30%" height="20%"> 
+
 
