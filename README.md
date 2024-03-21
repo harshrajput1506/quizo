@@ -2,6 +2,10 @@
 
 Welcome to the Quizo app GitHub repository! Quizo is an innovative quiz and gaming app that offers a wide range of features for users to enhance their knowledge and earn rewards. This README file provides an overview of the app's features and how to get started.
 
+## Download
+
+You can download the Quizo app from [here](https://quizo.fun/download).
+
 ## Screenshots
 
 | ![Screenshot 1](screenshots/screenshot1.jpg) | ![Screenshot 2](screenshots/screenshot2.jpg) | ![Screenshot 3](screenshots/screenshot3.jpg) |
@@ -19,10 +23,6 @@ To get started with Quizo, follow these steps:
 2. **Open the project in Android Studio:**
 
 3. **Build and run the app on an emulator or physical device:**
-
-## Download
-
-You can download the Quizo app from [here](https://quizo.fun/download).
 
 ## Features
 
