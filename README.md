@@ -20,6 +20,9 @@ To get started with Quizo, follow these steps:
 
 3. **Build and run the app on an emulator or physical device:**
 
+## Download
+
+You can download the Quizo app from [here](https://quizo.fun/download).
 
 ## Features
 
