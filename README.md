@@ -1,6 +1,6 @@
 # Quizo App
 
-Welcome to the Quizo app GitHub repository! Quizo is an innovative quiz and gaming app that offers a wide range of features for users to enhance their knowledge and earn rewards. This README file provides an overview of the app's features and how to get started.
+Welcome to the Quizo app GitHub repository! Quizo is an innovative quiz and gaming app that offers a wide range of features for users to enhance their knowledge and earn rewards. An overview of the app's features and how to get started.
 
 ## Download
 
