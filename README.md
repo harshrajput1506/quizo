@@ -4,7 +4,7 @@ Welcome to the Quizo app GitHub repository! Quizo is an innovative quiz and gami
 
 ## Download
 
-You can download the Quizo app from [here](https://quizo.fun/download).
+You can download the Quizo app from [here](https://github.com/harshrajput1506/quizo/blob/master/app/release/app-release.apk).
 
 ## Screenshots
 
